@@ -1,12 +1,4 @@
-const knex = require('knex')
-
-const db = knex({
-  client: 'sqlite3',
-  connection: {
-    filename: './data/dealer.db3'
-  },
-  useNullAsDefault: true
-});
+const db = require('../../data/db-config')
 
 function getAll() {
   return db('cars')
@@ -21,8 +13,13 @@ async function create(car) {
   return getById(id)
 }
 
+function getByVin(vin) {
+  return db('cars').where('vin', vin).first()
+}
+
 module.exports = {
   getAll,
   getById,
-  create
+  create,
+  getByVin
 }
